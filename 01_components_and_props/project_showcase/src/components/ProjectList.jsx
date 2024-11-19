@@ -1,14 +1,18 @@
 import React from 'react';
-import projects from '../projects';
 import ProjectCard from './ProjectCard';
 
-const ProjectList = () => {
+const ProjectList = (props) => {
+
+    const allProjects = props.projects.map(p => 
+        <ProjectCard {...p} key={p.id} />
+    )
 
     return (
-        <div>
-            <h3>All my projects</h3>
-            <ProjectCard project={projects[0]} />
-        </div>
+        <section>
+            <h2>Projects</h2>
+            {/* ADD FILTER BUTTONS */}
+            <ul className='cards'>{allProjects}</ul>
+        </section>
     );
 }
 
