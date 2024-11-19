@@ -1,6 +1,14 @@
-import React from "react";
+import { useState } from "react";
+
+// add event listener to button onClick
 
 const Header = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const buttonText = isDarkMode ? "Light Mode" : "Dark Mode";
+
+  const handleClick = () => setIsDarkMode(prevMode => !prevMode);
+
   return (
     <header>
       <h1>
@@ -8,7 +16,7 @@ const Header = () => {
         Project Showcase
       </h1>
       <nav>
-        <button>Light Mode</button>
+        <button onClick={handleClick}>{buttonText}</button>
       </nav>
     </header>
   );

@@ -1,11 +1,19 @@
-const ProjectListItem = ({ project }) => {
+import { useState } from 'react';
+
+const ProjectCard = ({ project }) => {
+  const [clapCounts, setClapCounts] = useState(0);
+
   const { image, name, about, link, phase } = project;
+
+  const handleClaps = () => {
+    setClapCounts(prevClaps => prevClaps + 1)
+  }
   
   return (
     <li className="card">
       <figure className="image">
         <img src={image} alt={name} />
-        <button className="claps">👏{0}</button>
+        <button onClick={handleClaps} className="claps">👏{clapCounts}</button>
       </figure>
 
       <section className="details">
@@ -25,4 +33,4 @@ const ProjectListItem = ({ project }) => {
   );
 };
 
-export default ProjectListItem;
+export default ProjectCard;
