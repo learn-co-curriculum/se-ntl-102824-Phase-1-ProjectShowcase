@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ProjectListItem from "./ProjectListItem";
+import ProjectListItem from "./ProjectCard";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
