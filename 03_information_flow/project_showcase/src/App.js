@@ -1,15 +1,22 @@
-
+import { useState } from "react";
 import Header from "./components/Header";
-import ProjectForm from "./components/ProjectForm";
-import ProjectList from "./components/ProjectList";
+import ProjectsContainer from "./components/ProjectsContainer";
 
 const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const onToggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode)
+  }
+
+  const onToggleSayHi = () => {
+    setSayHi(prevHi => !prevHi)
+  }
 
   return (
-    <div className="App">
-      <Header />
-      <ProjectForm />
-      <ProjectList />
+    <div className={isDarkMode ? "App" : "App light"}>
+      <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
+      <ProjectsContainer />
     </div>
   );
 };

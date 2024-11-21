@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import ProjectListItem from "./ProjectCard";
 
-const ProjectList = () => {
-  const projects = [];
+const ProjectList = ({projects, loadProjects}) => {
+  // const [projects, setProjects] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value)
   }
+
+  // const loadProjects = () => {
+  //   fetch("http://localhost:4000/projects")
+  //   .then(r => r.json())
+  //   .then(projects => setProjects(projects))
+  // }
 
   const searchResults = projects.filter(project => {
     return project.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,7 +31,7 @@ const ProjectList = () => {
   return (
     <section>
       <h2>Projects</h2>
-
+      <button onClick={loadProjects}>Load Projects</button>
       <div className="filter">
         <button>All</button>
         <button>Phase 5</button>
