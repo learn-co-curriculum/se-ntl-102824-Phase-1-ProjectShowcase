@@ -28,7 +28,15 @@ const ProjectForm = ({addProject}) => {
       image: formData.image
     }
 
-    addProject(p);
+    fetch("http://localhost:4000/projects", {
+      method: "POST",
+      header: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(p)
+    })
+    .then(r => r.json())
+    .then(proj => addProject(proj))
 
     setFormData(initialFormState);
   }

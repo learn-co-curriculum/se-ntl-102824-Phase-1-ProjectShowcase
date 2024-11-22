@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProjectListItem from "./ProjectCard";
 
-const ProjectList = ({projects, onLoadProjects}) => {
-  const [searchQuery, setSearchQuery] = useState("")
+const ProjectList = ({projects, setSelectedPhase, setSearchQuery}) => {
+  const [tempSearch, setTempSearch] = useState("")
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value)
+    setTempSearch(e.target.value)
   }
 
-  const searchResults = projects.filter(project => {
-    return project.name.toLowerCase().includes(searchQuery.toLowerCase())
-  })
+  useEffect(() => {
+    const scheduledUpdate = setTimeout(() => {
+      setSearchQuery(tempSearch)
+    }, 500)
+
+    return () => {
+      clearTimeout(scheduledUpdate)
+    }
+  }, [tempSearch])
 
   const renderProjects = (projects) => {
     return projects.map(project => (
@@ -24,22 +30,22 @@ const ProjectList = ({projects, onLoadProjects}) => {
   return (
     <section>
       <h2>Projects</h2>
-      <button onClick={onLoadProjects}>Load Projects</button>
       <div className="filter">
-        <button>All</button>
-        <button>Phase 5</button>
-        <button>Phase 4</button>
-        <button>Phase 3</button>
-        <button>Phase 2</button>
-        <button>Phase 1</button>
+        <button onClick={() => setSelectedPhase("")}>All</button>
+        <button onClick={() => setSelectedPhase("5")}>Phase 5</button>
+        <button onClick={() => setSelectedPhase("4")}>Phase 4</button>
+        <button onClick={() => setSelectedPhase("3")}>Phase 3</button>
+        <button onClick={() => setSelectedPhase("2")}>Phase 2</button>
+        <button onClick={() => setSelectedPhase("1")}>Phase 1</button>
       </div>
       <input
         type="text"
         placeholder="Search..."
         onChange={handleSearch}
+        value={tempSearch}
       />
 
-      <ul className="cards">{renderProjects(searchResults)}</ul>
+      <ul className="cards">{renderProjects(projects)}</ul>
     </section>
   );
 };
