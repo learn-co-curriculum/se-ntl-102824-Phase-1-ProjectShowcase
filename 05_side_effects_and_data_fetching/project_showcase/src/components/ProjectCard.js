@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ProjectListItem = ({ id, about, image, link, name, phase }) => {
+const ProjectCard = ({ id, about, image, link, name, phase }) => {
   const [clapCount, setClapCount] = useState(0);
 
   const handleClap = () => setClapCount(clapCount + 1);
@@ -31,4 +31,4 @@ const ProjectListItem = ({ id, about, image, link, name, phase }) => {
   );
 };
 
-export default ProjectListItem;
+export default ProjectCard;
