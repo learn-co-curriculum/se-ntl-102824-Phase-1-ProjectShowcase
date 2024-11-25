@@ -1,19 +1,33 @@
 import { useState } from "react";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
-function ProjectCard({ 
-  project, 
+function ProjectCard({
+  project,
   onEditProject,
   onUpdateProject,
-  onDeleteProject
+  onDeleteProject,
 }) {
+  const projectsURL = "http://localhost:4000/projects";
   const { id, image, about, name, link, phase, claps } = project;
 
-  const [clapCount, setClapCount] = useState(claps)
+  // const [clapCount, setClapCount] = useState(claps);
 
   const handleClap = () => {
-    setClapCount(clapCount => clapCount + 1);
+    // setClapCount((clapCount) => clapCount + 1);
     // refactor to persist on backend
+    fetch(projectsURL + `/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({claps: claps + 1})
+    })
+      .then(r => {
+        if (r.ok) {
+          return r.json()
+        } else { throw new Error(r.statusText)}
+      })
+      .then(onUpdateProject)
   };
 
   const handleEditClick = () => {
@@ -21,20 +35,33 @@ function ProjectCard({
   };
 
   const handleDeleteClick = () => {
-    if (window.confirm("Are you sure you want to delete this project?")) { 
+    if (window.confirm("Are you sure you want to delete this project?")) {
       // optimistic version of DELETE
-     
+      // fetch(projectsURL + `/${id}`, {method: "DELETE"})
+      // onDeleteProject(id)
       // pessimistic version of DELETE
-      
+      fetch(projectsURL + `/${id}`, { method: "DELETE" }).then((r) => {
+        if (r.ok) {
+          onDeleteProject(id);
+        } else {
+          throw new Error(r.statusText);
+        }
+      });
     }
   };
 
   return (
     <li className="card">
       <figure className="image">
-        <img src={image} alt={name} />
-        <button onClick={handleClap} className="claps">
-          👏{clapCount}
+        <img
+          src={image}
+          alt={name}
+        />
+        <button
+          onClick={handleClap}
+          className="claps"
+        >
+          👏{claps}
         </button>
       </figure>
 
@@ -61,6 +88,6 @@ function ProjectCard({
       </footer>
     </li>
   );
-};
+}
 
 export default ProjectCard;

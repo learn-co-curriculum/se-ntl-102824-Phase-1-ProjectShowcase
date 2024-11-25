@@ -5,10 +5,12 @@ function ProjectEditForm({ projectToEdit, onUpdateProject }) {
 
   const { name, about, phase, link, image } = formData;
 
+  const projectsURL = "http://localhost:4000/projects";
+
   // refetch the projectToEdit from the database upon load
   // to ensure we have the most recent values for our formData
   useEffect(() => {
-    fetch(`http://localhost:4000/projects/${projectToEdit.id}`)
+    fetch(`${projectsURL}/${projectToEdit.id}`)
       .then((res) => res.json())
       .then((project) => setFormData(project));
   }, [projectToEdit.id]);
@@ -22,15 +24,35 @@ function ProjectEditForm({ projectToEdit, onUpdateProject }) {
     e.preventDefault();
     // Add code here
     // optimistic version of PATCH update
-    
-    onUpdateProject(formData);
+    const configObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+    // fetch(`${projectsURL}/${projectToEdit.id}`, configObj)
+    // onUpdateProject(formData);
 
     // pessimistic version of PATCH update
-   
+    fetch(`${projectsURL}/${projectToEdit.id}`, configObj)
+      .then((r) => {
+        if (r.ok) {
+          return r.json();
+        } else {
+          throw new Error(r.statusText);
+        }
+      })
+      .then(onUpdateProject);
+      // .then(updateJSON => onUpdateProject(updateJSON)) // long version of line above
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form" autoComplete="off">
+    <form
+      onSubmit={handleSubmit}
+      className="form"
+      autoComplete="off"
+    >
       <h3>Edit Project</h3>
 
       <label htmlFor="name">Name</label>
@@ -43,10 +65,20 @@ function ProjectEditForm({ projectToEdit, onUpdateProject }) {
       />
 
       <label htmlFor="about">About</label>
-      <textarea id="about" name="about" value={about} onChange={handleOnChange} />
+      <textarea
+        id="about"
+        name="about"
+        value={about}
+        onChange={handleOnChange}
+      />
 
       <label htmlFor="phase">Phase</label>
-      <select name="phase" id="phase" value={phase} onChange={handleOnChange}>
+      <select
+        name="phase"
+        id="phase"
+        value={phase}
+        onChange={handleOnChange}
+      >
         <option value="1">Phase 1</option>
         <option value="2">Phase 2</option>
         <option value="3">Phase 3</option>
@@ -75,6 +107,6 @@ function ProjectEditForm({ projectToEdit, onUpdateProject }) {
       <button type="submit">Update Project</button>
     </form>
   );
-};
+}
 
 export default ProjectEditForm;
