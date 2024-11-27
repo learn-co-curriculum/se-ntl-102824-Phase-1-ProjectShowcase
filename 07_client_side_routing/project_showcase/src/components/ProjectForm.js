@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 const initialState = {
   name: "",
@@ -10,6 +11,8 @@ const initialState = {
 
 const ProjectForm = ({ onAddProject }) => {
   const [formData, setFormData] = useState(initialState);
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +34,7 @@ const ProjectForm = ({ onAddProject }) => {
       .then((project) => {
         onAddProject(project);
         setFormData(initialState);
+        navigate(`/projects/${project.id}`)
       });
   };
 

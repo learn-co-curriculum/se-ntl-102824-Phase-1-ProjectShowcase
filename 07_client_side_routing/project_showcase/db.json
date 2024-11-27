@@ -2,7 +2,7 @@
   "projects": [
     {
       "id": 1,
-      "name": "Great Outdoors Guide",
+      "name": "Great Outdoors Guide Site",
       "about": "Plan your next adventure to in the U.S. National Parks!",
       "phase": 4,
       "link": "https://great-outdoors-guide.netlify.app",
@@ -12,7 +12,7 @@
     {
       "id": 2,
       "name": "Book Her",
-      "about": "The app takes you (the Casting Director) through a series of questions to determine the Models you need for your next Project.",
+      "about": "The app takes you (the Casting Director) through a series of questions to determine the Models you need for your next big Project.",
       "phase": 4,
       "link": "https://bookher.netlify.app/new_project",
       "image": "https://i.imgur.com/INs84Uk.png",
@@ -98,6 +98,15 @@
       "link": "https://gamesrx.netlify.app",
       "image": "https://i.imgur.com/Japzh6v.png",
       "claps": 0
+    },
+    {
+      "name": "Bikr",
+      "about": "a site for custom bike builds",
+      "phase": "4",
+      "link": "bikr.com",
+      "image": "https://cdn.pixabay.com/photo/2021/12/17/13/58/vintage-photograph-6876622_1280.jpg",
+      "claps": 0,
+      "id": 26
     }
   ]
 }
