@@ -12,6 +12,7 @@ const ProjectDetail = () => {
       .then((r) => r.json())
       .then((project) => {
         setProject(project);
+        setClaps(project.claps)
       });
   }, [id]);
 

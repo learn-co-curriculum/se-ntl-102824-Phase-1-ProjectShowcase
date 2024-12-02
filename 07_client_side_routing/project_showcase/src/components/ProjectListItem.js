@@ -2,16 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
-const ProjectListItem = ({ project, onEditProject, onDeleteProject }) => {
-  const { id, image, about, name, link, phase } = project;
+const ProjectListItem = ({ project, onDeleteProject }) => {
+  const { id, image, about, name, link, phase, claps } = project;
 
-  const [clapCount, setClapCount] = useState(0);
+  const [clapCount, setClapCount] = useState(claps);
 
-  const handleClap = (clapCount) => setClapCount(clapCount + 1);
-
-  const handleEditClick = () => {
-    onEditProject(project);
+  const handleClap = () => {
+    fetch(`http://localhost:4000/projects/${id}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({claps: claps + 1})
+    })
+    setClapCount(clapCount + 1)
   };
+
+  // const handleEditClick = () => {
+  //   onEditProject(project);
+  // };
 
   const handleDeleteClick = () => {
     onDeleteProject(id);
